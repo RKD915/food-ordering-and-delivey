@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Clock, MapPinned, ReceiptText } from 'lucide-react';
+import API_BASE from '../config/api';
 
 const formatCurrency = (amount) => new Intl.NumberFormat('en-IN', {
   style: 'currency',
@@ -12,7 +13,7 @@ const PurchaseHistory = () => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/orders')
+    fetch(`${API_BASE}/orders`)
       .then((res) => res.json())
       .then((data) => setOrders(data))
       .catch((err) => console.error('Error fetching orders', err));

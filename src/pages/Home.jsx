@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight, Clock, Plus, ShieldCheck, ShoppingCart, Truck } from 'lucide-react';
 import heroImage from '../assets/hero.png';
+import API_BASE from '../config/api';
 import styles from './Home.module.css';
 
 const formatCurrency = (amount) => new Intl.NumberFormat('en-IN', {
@@ -15,7 +16,7 @@ const Home = () => {
   const [toastMessage, setToastMessage] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/foods')
+    fetch(`${API_BASE}/foods`)
       .then((res) => res.json())
       .then((data) => setFoods(data))
       .catch((err) => console.error('Failed to fetch foods', err));

@@ -2,9 +2,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Check, Clock, CreditCard, Home, Package, ReceiptText, Truck } from 'lucide-react';
 import DeliveryTracker from '../components/DeliveryTracker';
+import API_BASE from '../config/api';
 import styles from './OrderConfirmed.module.css';
-
-const API_BASE = 'http://localhost:5000/api';
 
 const STATUS_STEPS = [
   { label: 'Placed', icon: Check },

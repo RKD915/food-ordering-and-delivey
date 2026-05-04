@@ -81,10 +81,17 @@ JWT_SECRET=supersecretfoodappkey
 Frontend environment file: `.env`
 
 ```env
+VITE_API_BASE_URL=http://localhost:5000/api
 VITE_GOOGLE_MAPS_API_KEY=
 ```
 
 Add a real Google Maps API key to enable the Google Maps map view. Without a key, the fallback animated tracker still works.
+
+For deployment, set `VITE_API_BASE_URL` to your deployed backend URL, for example:
+
+```env
+VITE_API_BASE_URL=https://foodexpress-api.onrender.com/api
+```
 
 ## Install Dependencies
 
@@ -215,3 +222,34 @@ For true Zomato-style tracking in production, a driver app must send real GPS co
 - Orders are stored in MongoDB database `food-delivery-db`.
 - The fallback tracker works without Google Maps.
 - Google Maps requires a valid browser API key and enabled Maps JavaScript API.
+
+## Deployment
+
+Recommended deployment:
+
+- Backend: Render web service
+- Frontend: Netlify or Vercel static site
+- Database: MongoDB Atlas
+
+Important: the local MongoDB URL `mongodb://localhost:27017/food-delivery-db` will not work after deployment because the deployed backend runs on another server. Use a MongoDB Atlas connection string for `MONGO_URI`.
+
+Backend on Render:
+
+```text
+Root directory: backend
+Build command: npm install
+Start command: npm start
+Environment variables:
+  MONGO_URI=<your MongoDB Atlas URI>
+  JWT_SECRET=<long random secret>
+```
+
+Frontend on Netlify or Vercel:
+
+```text
+Build command: npm run build
+Publish/output directory: dist
+Environment variables:
+  VITE_API_BASE_URL=https://your-render-backend-url.onrender.com/api
+  VITE_GOOGLE_MAPS_API_KEY=<optional Google Maps API key>
+```

@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Clock, ExternalLink, Home, MapPin, Navigation, Phone, Star, Store, Truck } from 'lucide-react';
+import API_BASE from '../config/api';
 import styles from './DeliveryTracker.module.css';
 
-const API_BASE = 'http://localhost:5000/api';
 const GOOGLE_MAPS_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 const STATUS_STEPS = ['Placed', 'Preparing', 'Out for delivery', 'Delivered'];

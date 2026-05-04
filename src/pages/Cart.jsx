@@ -15,9 +15,8 @@ import {
   User,
   Wallet
 } from 'lucide-react';
+import API_BASE from '../config/api';
 import styles from './Cart.module.css';
-
-const API_BASE = 'http://localhost:5000/api';
 
 const PAYMENT_METHODS = [
   {
