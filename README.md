@@ -7,16 +7,10 @@ FoodExpress is a food ordering and delivery web app built with React, Vite, Expr
 - Browse Indian and Western food menus from MongoDB.
 - Add items to cart with live cart count.
 - Checkout with delivery details.
-- Payment methods:
-  - UPI with app-specific merchant IDs.
-  - Credit and debit card details.
-  - Digital wallet.
-  - Net banking.
-  - Cash on delivery.
+- Use UPI, credit/debit card, wallet, net banking, or cash on delivery.
 - Save orders in MongoDB.
 - Show order confirmation, receipt, and order history.
-- Track each order with unique route, driver, ETA, progress, and Google Maps directions link.
-- Optional Google Maps frontend integration using `VITE_GOOGLE_MAPS_API_KEY`.
+- Track each order with route, driver, ETA, progress, and Google Maps directions support.
 
 ## Tech Stack
 
@@ -30,47 +24,38 @@ FoodExpress is a food ordering and delivery web app built with React, Vite, Expr
 
 ```text
 food ordering and delivey/
-├── backend/
-│   ├── models/
-│   │   ├── Food.js
-│   │   ├── Order.js
-│   │   └── User.js
-│   ├── .env
-│   ├── seed.js
-│   ├── seedCustomData.js
-│   └── server.js
-├── public/
-│   └── images/
-├── src/
-│   ├── components/
-│   │   ├── DeliveryTracker.jsx
-│   │   └── Navbar.jsx
-│   ├── pages/
-│   │   ├── Cart.jsx
-│   │   ├── Home.jsx
-│   │   ├── Login.jsx
-│   │   ├── OrderConfirmed.jsx
-│   │   ├── PurchaseHistory.jsx
-│   │   └── Register.jsx
-│   ├── App.jsx
-│   ├── index.css
-│   └── main.jsx
-├── .env
-├── .env.example
-├── package.json
-└── README.md
+|-- backend/
+|   |-- models/
+|   |   |-- Food.js
+|   |   |-- Order.js
+|   |   `-- User.js
+|   |-- .env
+|   |-- seed.js
+|   |-- seedCustomData.js
+|   `-- server.js
+|-- frontend/
+|   |-- public/
+|   |   `-- images/
+|   |-- src/
+|   |   |-- components/
+|   |   |-- config/
+|   |   |-- pages/
+|   |   |-- App.jsx
+|   |   |-- index.css
+|   |   `-- main.jsx
+|   |-- .env
+|   |-- .env.example
+|   |-- package.json
+|   `-- vite.config.js
+|-- netlify.toml
+|-- render.yaml
+|-- vercel.json
+`-- README.md
 ```
-
-## Requirements
-
-- Node.js
-- npm
-- MongoDB running locally
-- MongoDB Compass is optional, but useful for viewing `food-delivery-db`
 
 ## Environment Variables
 
-Backend environment file: `backend/.env`
+Backend file: `backend/.env`
 
 ```env
 MONGO_URI=mongodb://localhost:27017/food-delivery-db
@@ -78,30 +63,31 @@ PORT=5000
 JWT_SECRET=supersecretfoodappkey
 ```
 
-Frontend environment file: `.env`
+Frontend file: `frontend/.env`
 
 ```env
 VITE_API_BASE_URL=http://localhost:5000/api
 VITE_GOOGLE_MAPS_API_KEY=
 ```
 
-Add a real Google Maps API key to enable the Google Maps map view. Without a key, the fallback animated tracker still works.
-
-For deployment, set `VITE_API_BASE_URL` to your deployed backend URL, for example:
+For deployment, set `VITE_API_BASE_URL` to your Render backend URL:
 
 ```env
-VITE_API_BASE_URL=https://foodexpress-api.onrender.com/api
+VITE_API_BASE_URL=https://food-ordering-and-delivey.onrender.com/api
 ```
+
+`VITE_GOOGLE_MAPS_API_KEY` is optional. If it is empty, the fallback delivery tracker still works.
 
 ## Install Dependencies
 
-From the project root:
+Frontend:
 
 ```powershell
+cd "D:\food ordering and delivey\frontend"
 npm install
 ```
 
-From the backend folder:
+Backend:
 
 ```powershell
 cd "D:\food ordering and delivey\backend"
@@ -128,7 +114,7 @@ http://localhost:5000
 Terminal 2, frontend:
 
 ```powershell
-cd "D:\food ordering and delivey"
+cd "D:\food ordering and delivey\frontend"
 npm run dev
 ```
 
@@ -136,6 +122,23 @@ Frontend URL:
 
 ```text
 http://127.0.0.1:5173/
+```
+
+## Useful Scripts
+
+Frontend scripts, run inside `frontend/`:
+
+```powershell
+npm run dev
+npm run build
+npm run lint
+npm run preview
+```
+
+Backend scripts, run inside `backend/`:
+
+```powershell
+npm start
 ```
 
 ## Seed Database
@@ -154,23 +157,6 @@ Email: rohan@test.com
 Password: 123
 ```
 
-## Useful Scripts
-
-Frontend:
-
-```powershell
-npm run dev
-npm run build
-npm run lint
-npm run preview
-```
-
-Backend:
-
-```powershell
-npm start
-```
-
 ## API Endpoints
 
 ```text
@@ -184,45 +170,6 @@ GET    /api/orders/:id           Fetch one order
 GET    /api/orders/:id/tracking  Fetch live tracking snapshot
 ```
 
-## Payment Flow
-
-This project uses mock payment validation for demo purposes. It validates input and stores only safe metadata:
-
-- UPI stores provider, customer UPI ID, and merchant UPI ID.
-- Card stores card type and last 4 digits only.
-- Wallet stores provider and mobile number.
-- Net banking stores selected bank name.
-- Cash on delivery stores pending collection status.
-
-Do not use this as a production payment gateway without integrating a real provider such as Razorpay, Stripe, Cashfree, or PayU.
-
-## Delivery Tracking
-
-Each order gets:
-
-- Unique route ID.
-- Driver details.
-- Restaurant location.
-- Customer destination.
-- Route points.
-- ETA and progress.
-- Google Maps directions URL.
-
-The live map updates by polling:
-
-```text
-GET /api/orders/:id/tracking
-```
-
-For true Zomato-style tracking in production, a driver app must send real GPS coordinates to the backend, and the frontend should subscribe through WebSockets or server-sent events.
-
-## Notes
-
-- The cart is stored in `localStorage`.
-- Orders are stored in MongoDB database `food-delivery-db`.
-- The fallback tracker works without Google Maps.
-- Google Maps requires a valid browser API key and enabled Maps JavaScript API.
-
 ## Deployment
 
 Recommended deployment:
@@ -230,8 +177,6 @@ Recommended deployment:
 - Backend: Render web service
 - Frontend: Netlify or Vercel static site
 - Database: MongoDB Atlas
-
-Important: the local MongoDB URL `mongodb://localhost:27017/food-delivery-db` will not work after deployment because the deployed backend runs on another server. Use a MongoDB Atlas connection string for `MONGO_URI`.
 
 Backend on Render:
 
@@ -247,9 +192,17 @@ Environment variables:
 Frontend on Netlify or Vercel:
 
 ```text
+Base/root directory: frontend
 Build command: npm run build
 Publish/output directory: dist
 Environment variables:
-  VITE_API_BASE_URL=https://your-render-backend-url.onrender.com/api
+  VITE_API_BASE_URL=https://food-ordering-and-delivey.onrender.com/api
   VITE_GOOGLE_MAPS_API_KEY=<optional Google Maps API key>
 ```
+
+## Notes
+
+- Orders are stored in MongoDB database `food-delivery-db`.
+- The cart is stored in `localStorage`.
+- Payment validation is mock/demo only. Use a real payment gateway such as Razorpay, Stripe, Cashfree, or PayU for production.
+- True Zomato-style live GPS tracking needs a driver app sending real GPS coordinates to the backend.
