@@ -197,7 +197,8 @@ Base/root directory: frontend
 Build command: npm run build
 Publish/output directory: dist
 Environment variables:
-  VITE_API_BASE_URL=https://food-ordering-and-delivey.onrender.com/api
+  https://food-ordering-and-delivey.onrender.com/ 
+  VITE_API_BASE_URL=https://food-ordering-and-delivey.onrender.com/api/foods
   VITE_GOOGLE_MAPS_API_KEY=<optional Google Maps API key>
 ```
 
