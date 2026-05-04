@@ -192,7 +192,7 @@ const Cart = () => {
   const validateDelivery = () => {
     if (delivery.name.trim().length < 2) return 'Enter the delivery name.';
     if (!/^[6-9]\d{9}$/.test(delivery.phone.trim())) return 'Enter a valid 10 digit Indian mobile number.';
-    if (delivery.address.trim().length < 8) return 'Enter a complete delivery address.';
+    if (delivery.address.trim().length < 3) return 'Enter a complete delivery address.';
     return '';
   };
 
