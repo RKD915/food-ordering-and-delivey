@@ -190,6 +190,7 @@ Environment variables:
 ```
 
 Frontend on Netlify or Vercel:
+https://foodexpresssss.netlify.app/
 
 ```text
 Base/root directory: frontend
