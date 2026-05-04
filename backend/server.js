@@ -8,6 +8,7 @@ import jwt from 'jsonwebtoken';
 import User from './models/User.js';
 import Food from './models/Food.js';
 import Order from './models/Order.js';
+import defaultFoods from './defaultFoods.js';
 
 dotenv.config();
 
@@ -47,8 +48,19 @@ const ROUTE_LABELS = [
   'Last Mile'
 ];
 
+const seedDefaultFoods = async () => {
+  const foodCount = await Food.countDocuments();
+  if (foodCount > 0) return;
+
+  await Food.insertMany(defaultFoods);
+  console.log(`Seeded ${defaultFoods.length} default food items.`);
+};
+
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('Successfully connected to MongoDB!'))
+  .then(async () => {
+    console.log('Successfully connected to MongoDB!');
+    await seedDefaultFoods();
+  })
   .catch((err) => console.error('MongoDB connection error:', err));
 
 const hashString = (value = '') => (
